@@ -1,0 +1,69 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+
+<dom-module id="slider-handle">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      :host > svg .slider-handle {
+        position: relative;
+        stroke: #90CAF9;
+        stroke-width: 2;
+        fill: #90CAF9;
+        padding: 2px;
+      }
+      :host > svg .slider-handle:hover {
+        stroke: #1565C0;
+        fill: #1565C0;
+      }
+      :host > svg .slider-handle.selected {
+        stroke: #FF9800;
+        fill: #FF9800;
+      }
+    </style>
+    <!-- local DOM -->
+    <svg class="slider-handle" height="10" width ="10">
+      <polygon points="1,1 9,1 5,9" />
+    </svg>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'slider-handle',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'slider-handle'
+        },
+        isSelected : {
+          type: Boolean,
+          value: false,
+          observer: '_isSelectedChanged',
+          reflectToAttribute: true
+        }
+      },
+
+      listeners: {
+        'tap':'handleTap'
+      },
+
+      handleTap : function(e){
+        // console.log(e.ctrlKey);
+        this.isSelected = !this.isSelected;
+      },
+
+      _isSelectedChanged : function (newValue) {
+        console.log("isSelected property was changed to "+newValue);
+        // this.$.svg.toggleClass('selected');
+        // console.log(this);
+        this.$$('.slider-handle').classList.add('selected');
+
+      }
+
+    });
+  </script>
+</dom-module>
